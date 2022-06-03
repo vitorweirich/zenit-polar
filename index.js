@@ -24,7 +24,7 @@ function encode(str){
 }
 
 function traduzir(query) {
-    const { text } = query;
+    const text = query;
     let frases = String(text).split('|');
     
     const vogais = ['a', 'e', 'i', 'o', 'u', '0', '1', '2' , '3', '4', '5', '6' , '7', '8', '9'];
@@ -55,12 +55,7 @@ function traduzir(query) {
 }
 
 function desTraduzir(query){
-    res.type('application/json');
-    
-    // Set the status code of the response.
-    res.status(200);
-    const { text } = query;
-    // Send the response body.
+    const text = query;
     let frases = String(text).split('|');
     
     const vogais = ['a', 'e', 'i', 'o', 'u', '0', '1', '2' , '3', '4', '5', '6' , '7', '8', '9'];
@@ -92,13 +87,9 @@ function desTraduzir(query){
 async function encriptar(){
    const texto =  document.getElementById('text').value;
    document.getElementById('text').value = ''
-   console.log(texto.replace('\n', '|'))
 
     if(texto) {
-        fetch('https://livelo-mock.getsandbox.com/v2/test/api?text=' + texto.replace('\n', '|'))
-        .then((response) => { 
-            response.text().then((x) => document.getElementById('resposta').value = x);
-        });
+        document.getElementById('resposta').value = traduzir(texto.replace('\n', '|'));
     } else {
         alert('Coloca um texte seu animal');
     }
@@ -108,13 +99,9 @@ async function encriptar(){
 async function decriptar(){
    const texto =  document.getElementById('resposta').value;
    document.getElementById('resposta').value = ''
-   console.log(texto.replace('\n', '|'))
 
     if(texto) {
-        fetch('https://livelo-mock.getsandbox.com/v3/test/api?text=' + texto.replace('\n', '|'))
-    .then((response) => { 
-        response.text().then((x) => document.getElementById('text').value = x);
-    });
+        document.getElementById('text').value = desTraduzir(texto);
     } else {
         alert('Coloca um texte seu animal');
     }
